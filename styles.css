@@ -8,24 +8,19 @@ body {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
+    background-color: #f8f9fa;
+
 }
 
-header {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: #f8f9fa;
-    padding: 20px;
-    text-align: center;
-}
+
 
 .grid-container {
     display: flex;
     align-self: center;
     justify-self: center;
-    background-color: #f8f9fa;
-    height: 80vh;
-    width: 80vh;
-    border: 3px black solid;
+    background-color: white;
+    height: 65vh;
+    width: 65vh;
     margin: auto;
+    filter: drop-shadow(0px 5px 20px #5c5c5c);
 }
