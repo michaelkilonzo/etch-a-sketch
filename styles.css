@@ -6,7 +6,7 @@
 body {
     display: flex;
     flex-direction: column;
-    background-color: lightgoldenrodyellow;
+    background-color: hwb(0 90% 10%);
     min-height: 100vh;
     align-items: center;
     justify-content: center;
@@ -16,11 +16,20 @@ body {
     display: flex;
     flex-wrap: wrap;
     background-color: white;
-    align-self: center;
+    align-content: center;
     justify-content: center;
+
 }
 
 .cell {
     border: 1px solid whitesmoke;
+}
 
+.btn-container {
+    display: flex;
+    justify-content: space-around;
+}
+
+button {
+    margin: 10px 75px;
 }

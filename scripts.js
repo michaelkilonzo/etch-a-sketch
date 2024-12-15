@@ -16,7 +16,7 @@ function createGrid(){
         gridContainerElement.appendChild(gridCell);
 
         gridCell.addEventListener('mouseover', function(){
-            this.style.backgroundColor = getRandomColor();
+            this.style.backgroundColor = 'black';
         });
     }
 }
