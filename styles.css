@@ -1,6 +1,5 @@
 * {
     margin: 0;
-    padding: 0;
 }
 
 body {
@@ -25,11 +24,18 @@ body {
     border: 1px solid whitesmoke;
 }
 
-.btn-container {
+.btn-container, .slider-container {
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
+    width: 600px;
+    margin: 10px;
 }
 
-button {
-    margin: 10px 75px;
+.btn-container > button {
+    height: 4vh;
+    width: 12vh;
+}
+
+.slider-container > .slider {
+    width: 100%;
 }
