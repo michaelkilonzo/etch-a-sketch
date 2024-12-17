@@ -2,7 +2,7 @@
 const GRIDSIDE = 600;
 
 // Variables
-let rows = 5;
+let rows = 4;
 let cols = rows;
 
 // DOM Elements
@@ -13,6 +13,7 @@ const toggleGrayscaleBtn = document.querySelector('#btn-grayscale');
 const toggleRainbowBtn = document.querySelector('#btn-rainbow');
 const toggleEraserBtn = document.querySelector('#btn-eraser');
 const slider = document.querySelector(".slider");
+const gridSizeTxt = document.querySelector('#grid-size');
 
 // Flags
 let drawFlags = new Map();
@@ -68,10 +69,15 @@ function clearGrid() {
     const cells = document.querySelectorAll('.cell');
     cells.forEach(cell => cell.style.backgroundColor = 'white');
 }
-
-function toggleMode(mode) {
+function toggleMode(mode, button) {
     drawFlags.forEach((_, key) => drawFlags.set(key, key === mode ? !drawFlags.get(key) : false));
+
+    // Update button active state
+    const buttons = [toggleGrayscaleBtn, toggleRainbowBtn, toggleEraserBtn];
+    buttons.forEach(btn => btn.classList.remove('active-btn')); // Remove active class
+    if (drawFlags.get(mode)) button.classList.add('active-btn'); // Add active class if mode is true
 }
+
 
 function getGrayscaleColor() {
     const value = Math.floor(Math.random() * 256);
@@ -91,15 +97,17 @@ function getRandomColor() {
 
 function gridSlider() {
     rows = cols = this.value;
+    gridSizeTxt.innerText = `${2**rows}x${2**cols}`;
     createGrid();
 }
 
 // Event Listeners
 toggleGridBtn.addEventListener('click', toggleGrid);
 clearGridBtn.addEventListener('click', clearGrid);
-toggleGrayscaleBtn.addEventListener('click', () => toggleMode('isGrayscale'));
-toggleRainbowBtn.addEventListener('click', () => toggleMode('isRainbow'));
-toggleEraserBtn.addEventListener('click', () => toggleMode('isEraser'));
+toggleGrayscaleBtn.addEventListener('click', () => toggleMode('isGrayscale', toggleGrayscaleBtn));
+toggleRainbowBtn.addEventListener('click', () => toggleMode('isRainbow', toggleRainbowBtn));
+toggleEraserBtn.addEventListener('click', () => toggleMode('isEraser', toggleEraserBtn));
+
 slider.addEventListener('input', gridSlider);
 
 // Initial Grid Creation
