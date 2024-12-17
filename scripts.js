@@ -2,7 +2,7 @@
 const GRIDSIDE = 600;
 
 // Variables
-let rows = 4;
+let rows = 3;
 let cols = rows;
 
 // DOM Elements
@@ -36,6 +36,9 @@ function createGrid() {
         gridContainerElement.appendChild(gridCell);
         gridCell.addEventListener('mouseover', draw);
     }
+    // init slider text 
+    gridSizeTxt.innerText = `${2**rows}x${2**cols}`;
+
 }
 
 function draw() {
@@ -109,7 +112,6 @@ clearGridBtn.addEventListener('click', clearGrid);
 toggleGrayscaleBtn.addEventListener('click', () => toggleMode('isGrayscale', toggleGrayscaleBtn));
 toggleRainbowBtn.addEventListener('click', () => toggleMode('isRainbow', toggleRainbowBtn));
 toggleEraserBtn.addEventListener('click', () => toggleMode('isEraser', toggleEraserBtn));
-
 slider.addEventListener('input', gridSlider);
 
 // Initial Grid Creation
