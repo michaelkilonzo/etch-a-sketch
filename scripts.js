@@ -66,14 +66,16 @@ function toggleGrid() {
 }
 
 function clearGrid() {
-    const cells = document.querySelectorAll('.cell');
-    cells.forEach(cell => cell.style.backgroundColor = 'white');
+    if (confirm("Are you sure you want to clear the sketch area?") == true) {
+        const cells = document.querySelectorAll('.cell');
+        cells.forEach(cell => cell.style.backgroundColor = 'white');
+    };
 }
 function toggleMode(mode, button) {
     drawFlags.forEach((_, key) => drawFlags.set(key, key === mode ? !drawFlags.get(key) : false));
 
     // Update button active state
-    const buttons = [toggleGrayscaleBtn, toggleRainbowBtn, toggleEraserBtn];
+    const buttons = [toggleGrayscaleBtn, toggleRainbowBtn, toggleEraserBtn, toggleGridBtn];
     buttons.forEach(btn => btn.classList.remove('active-btn')); // Remove active class
     if (drawFlags.get(mode)) button.classList.add('active-btn'); // Add active class if mode is true
 }
