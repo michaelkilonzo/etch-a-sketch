@@ -1,10 +1,6 @@
 // Constants
 const GRIDSIDE = 600;
 
-// Variables
-let rows = 3;
-let cols = rows;
-
 // DOM Elements
 const gridContainerElement = document.querySelector('.grid-container');
 const toggleGridBtn = document.querySelector('#btn-grid');
@@ -21,8 +17,11 @@ drawFlags.set('isGrayscale', false);
 drawFlags.set('isRainbow', false);
 drawFlags.set('isEraser', false);
 
+// State for grid line visibility
+let gridLinesVisible = true;
+
 // Functions
-function createGrid() {
+function createGrid(showGridLines = true) {
     gridContainerElement.innerHTML = '';
     gridContainerElement.style.width = `${GRIDSIDE}px`;
     gridContainerElement.style.height = `${GRIDSIDE}px`;
@@ -30,52 +29,51 @@ function createGrid() {
     for (let i = 0; i < (2 ** rows) * (2 ** cols); i++) {
         const gridCell = document.createElement('div');
         gridCell.classList.add('cell');
-        gridCell.style.width = `${(GRIDSIDE / 2 ** cols) - 2}px`;
-        gridCell.style.height = `${(GRIDSIDE / 2 ** rows) - 2}px`;
-
+        gridCell.style.width = `${GRIDSIDE / 2 ** cols}px`;
+        gridCell.style.height = `${GRIDSIDE / 2 ** rows}px`;
+        gridCell.style.border = showGridLines ? '1px solid rgb(245, 245, 245)' : 'none'; // Toggle grid lines
         gridContainerElement.appendChild(gridCell);
         gridCell.addEventListener('mouseover', draw);
     }
-    // init slider text 
-    gridSizeTxt.innerText = `${2**rows}x${2**cols}`;
-
+    gridSizeTxt.innerText = `${2 ** rows}x${2 ** cols}`;
 }
 
 function draw() {
     if (drawFlags.get('isGrayscale')) {
         this.style.backgroundColor = getGrayscaleColor();
-    }
-    else if (drawFlags.get('isRainbow')) {
+    } else if (drawFlags.get('isRainbow')) {
         this.style.backgroundColor = getRandomColor();
-    }
-    else if (drawFlags.get('isEraser')) {
+    } else if (drawFlags.get('isEraser')) {
         this.style.backgroundColor = 'white';
-    }
-    else {
+    } else {
         this.style.backgroundColor = 'black';
     }
 }
 
 function toggleGrid() {
-    const defaultBorder = '1px solid rgb(245, 245, 245)';
+    gridLinesVisible = !gridLinesVisible; // Toggle visibility state
     const cells = document.querySelectorAll('.cell');
     cells.forEach(cell => {
-        if (window.getComputedStyle(cell).border === defaultBorder) {
-            cell.style.border = 'none';
-        } else {
-            cell.style.border = defaultBorder;
-        }
+        cell.style.border = gridLinesVisible ? '1px solid rgb(245, 245, 245)' : 'none';
     });
+    toggleMode('isGridVisible', toggleGridBtn, gridLinesVisible); // Set button active state
 }
 
 function clearGrid() {
-    if (confirm("Are you sure you want to clear the sketch area?") == true) {
+    if (confirm("Are you sure you want to clear the sketch area?")) {
         const cells = document.querySelectorAll('.cell');
-        cells.forEach(cell => cell.style.backgroundColor = 'white');
-    };
+        cells.forEach(cell => (cell.style.backgroundColor = 'white'));
+    }
 }
-function toggleMode(mode, button) {
-    drawFlags.forEach((_, key) => drawFlags.set(key, key === mode ? !drawFlags.get(key) : false));
+
+function toggleMode(mode, button, isActive = null) {
+    if (isActive === null) {
+        // Toggle flags for drawing modes
+        drawFlags.forEach((_, key) => drawFlags.set(key, key === mode ? !drawFlags.get(key) : false));
+    } else {
+        // Directly set grid visibility state
+        drawFlags.set(mode, isActive);
+    }
 
     // Update button active state
     const buttons = [toggleGrayscaleBtn, toggleRainbowBtn, toggleEraserBtn, toggleGridBtn];
@@ -83,12 +81,10 @@ function toggleMode(mode, button) {
     if (drawFlags.get(mode)) button.classList.add('active-btn'); // Add active class if mode is true
 }
 
-
 function getGrayscaleColor() {
     const value = Math.floor(Math.random() * 256);
     const hexValue = value.toString(16).padStart(2, '0').toUpperCase();
-    const color = `#${hexValue}${hexValue}${hexValue}`;
-    return color;
+    return `#${hexValue}${hexValue}${hexValue}`;
 }
 
 function getRandomColor() {
@@ -102,8 +98,8 @@ function getRandomColor() {
 
 function gridSlider() {
     rows = cols = this.value;
-    gridSizeTxt.innerText = `${2**rows}x${2**cols}`;
-    createGrid();
+    gridSizeTxt.innerText = `${2 ** rows}x${2 ** cols}`;
+    createGrid(gridLinesVisible); // Recreate grid with current grid line visibility
 }
 
 // Event Listeners
@@ -115,4 +111,6 @@ toggleEraserBtn.addEventListener('click', () => toggleMode('isEraser', toggleEra
 slider.addEventListener('input', gridSlider);
 
 // Initial Grid Creation
-createGrid();
+let rows = 3;
+let cols = rows;
+createGrid(); // Create grid with default grid lines visible

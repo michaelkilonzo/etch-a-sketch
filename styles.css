@@ -25,9 +25,11 @@ body {
 
 /* Grid Cells */
 .cell {
-    border: 1px solid #f0f0f0;
+    box-sizing: border-box; /* Ensures the border is included in the cell's dimensions */
     transition: background-color 0.2s ease-in-out;
+    background-color: transparent; /* Default background to prevent unwanted color changes */
 }
+
 
 /* Button Container */
 .btn-container {
