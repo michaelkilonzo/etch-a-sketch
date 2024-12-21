@@ -26,16 +26,16 @@ function createGrid(showGridLines = true) {
     gridContainerElement.style.width = `${GRIDSIDE}px`;
     gridContainerElement.style.height = `${GRIDSIDE}px`;
 
-    for (let i = 0; i < (2 ** rows) * (2 ** cols); i++) {
+    for (let i = 0; i < ( rows) * ( cols); i++) {
         const gridCell = document.createElement('div');
         gridCell.classList.add('cell');
-        gridCell.style.width = `${GRIDSIDE / 2 ** cols}px`;
-        gridCell.style.height = `${GRIDSIDE / 2 ** rows}px`;
+        gridCell.style.width = `${GRIDSIDE / cols}px`;
+        gridCell.style.height = `${GRIDSIDE / rows}px`;
         gridCell.style.border = showGridLines ? '1px solid rgb(245, 245, 245)' : 'none'; // Toggle grid lines
         gridContainerElement.appendChild(gridCell);
         gridCell.addEventListener('mouseover', draw);
     }
-    gridSizeTxt.innerText = `${2 ** rows}x${2 ** cols}`;
+    gridSizeTxt.innerText = `${ rows}x${cols}`;
 }
 
 function draw() {
@@ -111,6 +111,6 @@ toggleEraserBtn.addEventListener('click', () => toggleMode('isEraser', toggleEra
 slider.addEventListener('input', gridSlider);
 
 // Initial Grid Creation
-let rows = 3;
+let rows = 8;
 let cols = rows;
 createGrid(); // Create grid with default grid lines visible
