@@ -103,16 +103,6 @@ button {
 
 ---
 
-## 🖼️ Demo
-
-Here’s how it looks:
-
-![Sketch App Screenshot](https://via.placeholder.com/800x400.png?text=Sketch+App+Screenshot)
-
-(Optional: Replace with an actual screenshot or a link to a live demo)
-
----
-
 ## 🤝 Contribution
 
 Contributions are welcome! If you’d like to improve this project:
