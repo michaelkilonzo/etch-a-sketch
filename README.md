@@ -31,7 +31,7 @@ You need:
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/your-username/sketch-app.git
+   git clone https://github.com/michaelkilonzo/sketch-app.git
    ```
 
 2. Navigate to the project folder:
